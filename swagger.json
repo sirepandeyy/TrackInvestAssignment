@@ -1,0 +1,446 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Documentation of Server to add/delete/update/get employee and department detail",
+        "description": "Employee Department Management"
+    },
+    "servers": [],
+    "tags": [
+        {
+            "name": "Employees",
+            "description": "API for Employees in the system"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/employee": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Get all employee in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Create a new employee in system",
+                "requestBody": {
+                    "description": "Employee Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Invalid department id."
+                    }
+                }
+            }
+        },
+        "/employee/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the employee that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Get employee with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Employee with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Employee not found."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update employee with given ID",
+                "tags": [
+                    "Employee"
+                ],
+                "requestBody": {
+                    "description": "Employee Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Employee with new values of properties",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Unprocessable data."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "delete employee with given ID",
+                "tags": [
+                    "Employee"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Employee with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Employee not found."
+                    }
+                }
+            }
+        },
+        "/employee/sortby/{key}": {
+            "parameters": [
+                {
+                    "name": "key",
+                    "in": "path",
+                    "required": true,
+                    "description": "column name of employee table",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Get sorted value of any column(e_name,age,dept,e_id)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Invalid column name"
+                    }
+                }
+            }
+        },
+        "/employee/searchby/{key}": {
+            "parameters": [
+                {
+                    "name": "key",
+                    "in": "path",
+                    "required": true,
+                    "description": "Search data",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Search any keyword",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. No rows found"
+                    }
+                }
+            }
+        },
+
+        "/department": {
+        "get": {
+            "tags": [
+                "Department"
+            ],
+            "summary": "Get all Department in system",
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "$ref": "#/definitions/Department"
+                    }
+                }
+            }
+        },
+        "post": {
+            "tags": [
+                "Department"
+            ],
+            "summary": "Create a new Department in system",
+            "requestBody": {
+                "description": "Department Object",
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/definitions/Department"
+                        }
+                    }
+                }
+            },
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "201": {
+                    "description": "Created",
+                    "schema": {
+                        "$ref": "#/definitions/id"
+                    }
+                },
+                "422": {
+                    "description": "Failed. "
+                }
+            }
+        }
+        },
+        "/department/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Department that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "Get Department with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Department with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Department"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Department not found."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update Department with given ID",
+                "tags": [
+                    "Department"
+                ],
+                "requestBody": {
+                    "description": "Department Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Department"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Department with new values of properties",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Department"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Unprocessable data."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "delete Department with given ID",
+                "tags": [
+                    "Department"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Department with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Department not found."
+                    }
+                }
+            }
+        },
+        "/department/sortby/{key}": {
+            "parameters": [
+                {
+                    "name": "key",
+                    "in": "path",
+                    "required": true,
+                    "description": "column name of department table",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "Get sorted value of any column(d_name,d_id)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed. Invalid column name"
+                    }
+                }
+            }
+        }
+    },
+
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "Employee": {
+            "type": "object",
+            "properties": {
+                "e_name": {
+                    "type": "string"
+                },
+                "dept": {
+                    "type": "integer"
+                },
+                "age": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Department": {
+            "type": "object",
+            "properties": {
+                "d_name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

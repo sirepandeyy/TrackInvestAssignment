@@ -1,0 +1,1 @@
+[{"url":"/api-docs/swagger-ui-standalone-preset.js","body":{},"reqTime":1621216243273,"method":"GET"},{"url":"/api-docs/swagger-ui-init.js","body":{},"reqTime":1621216243277,"method":"GET"},{"url":"/api-docs/favicon-32x32.png","body":{},"reqTime":1621216243742,"method":"GET"}]
