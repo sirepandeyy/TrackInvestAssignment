@@ -9,8 +9,7 @@ export class Employee {
 
     this.router.get("/", async (req, res, next) => {
       try {
-        const query = "select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e.active=$1";
-        var result = await db.query(query, [true]);
+        var result = await db.query("select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e.active=$1", [true]);
         res.json(result.rows);
       } catch (err) {
         console.log(err);
@@ -20,8 +19,7 @@ export class Employee {
     this.router.get("/:id", async (req, res, next) => {
       try {
         const id = req.params.id;
-        const query = "select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e_id=$1";
-        var result = await db.query(query, [id]);
+        var result = await db.query("select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e_id=$1", [id]);
         if(result.rowCount!=0)res.status(200).json(result.rows);
         else res.status(404).json({message:'not found'});
       } catch (err) {
@@ -35,8 +33,7 @@ export class Employee {
       try {
         var key = req.params.key;
         if (key == "age" || key == "dept" || key == "e_name" || key=='e_id') {
-          const query = "select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id ORDER BY " + req.params.key;
-          var result = await db.query(query);
+          var result = await db.query("select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id ORDER BY " + req.params.key);
           res.status(200).json(result.rows);
         } else {
           res.status(422).json({ success: false, message: "Invalid sort" });
@@ -51,9 +48,7 @@ export class Employee {
     this.router.get("/searchby/:key", async (req, res, next) => {
       try {
         var key = req.params.key;
-        const query =
-          "select e.*,d.* from employee e,department d WHERE e.dept=d.d_id";
-        var result = await db.query(query);
+        var result = await db.query("select e.*,d.* from employee e,department d WHERE e.dept=d.d_id");
         const data = result.rows;
         var final = [];
         for (let d of data) {
@@ -94,9 +89,8 @@ export class Employee {
     this.router.put("/:id", async (req, res, next) => {
       try {
         var data = req.body;
-        const query =
-          "UPDATE employee SET e_name=$1,dept=$2,age=$3 WHERE e_id=$4";
-        var result = await db.query(query, [
+        
+        var result = await db.query("UPDATE employee SET e_name=$1,dept=$2,age=$3 WHERE e_id=$4", [
           data.e_name,
           data.dept,
           data.age,
@@ -114,8 +108,7 @@ export class Employee {
     });
     this.router.delete("/:id", async (req, res, next) => {
       try {
-        const query = "UPDATE employee SET active=$1 WHERE e_id=$2";
-        var result = await db.query(query, [false, req.params.id]);
+        var result = await db.query("UPDATE employee SET active=$1 WHERE e_id=$2", [false, req.params.id]);
         if (result.rowCount == 1) res.status(200).json({ success: true });
         else
           res.status(422).json({ success: false, message: "Failed to delete" });
