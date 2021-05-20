@@ -82,8 +82,7 @@ export class Employee {
             .status(422)
             .json({ success: false, message: "Invalid department" });
         }
-        const query = "INSERT INTO employee(e_name,dept,age) VALUES($1,$2,$3)";
-        var result = await db.query(query, [data.e_name, data.dept, data.age]);
+        var result = await db.query("INSERT INTO employee(e_name,dept,age) VALUES($1,$2,$3)", [data.e_name, data.dept, data.age]);
         res.status(201).json({ success: true });
       } catch (err) {
         console.log(err);
