@@ -64,7 +64,7 @@ var Server = /** @class */ (function () {
         next();
     };
     Server.prototype.handleRoutes = function () {
-        this.app.use(body_parser_1.default());
+        this.app.use(body_parser_1.default.urlencoded({ extended: true }));
         var employeeRoute = new employee_1.Employee(this.db);
         var departmentRoute = new department_1.Department(this.db);
         this.app.use(this.createLog);

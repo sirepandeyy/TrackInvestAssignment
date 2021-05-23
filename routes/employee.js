@@ -48,13 +48,12 @@ var Employee = /** @class */ (function () {
         this.router = express_1.default.Router();
         var db = this.database.db();
         this.router.get("/", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var query, result, err_1;
+            var result, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        query = "select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e.active=$1";
-                        return [4 /*yield*/, db.query(query, [true])];
+                        return [4 /*yield*/, db.query("select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e.active=$1", [true])];
                     case 1:
                         result = _a.sent();
                         res.json(result.rows);
@@ -70,14 +69,13 @@ var Employee = /** @class */ (function () {
             });
         }); });
         this.router.get("/:id", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var id, query, result, err_2;
+            var id, result, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         id = req.params.id;
-                        query = "select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e_id=$1";
-                        return [4 /*yield*/, db.query(query, [id])];
+                        return [4 /*yield*/, db.query("select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id and e_id=$1", [id])];
                     case 1:
                         result = _a.sent();
                         if (result.rowCount != 0)
@@ -97,15 +95,14 @@ var Employee = /** @class */ (function () {
             });
         }); });
         this.router.get("/sortby/:key", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var key, query, result, err_3;
+            var key, result, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         key = req.params.key;
                         if (!(key == "age" || key == "dept" || key == "e_name" || key == 'e_id')) return [3 /*break*/, 2];
-                        query = "select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id ORDER BY " + req.params.key;
-                        return [4 /*yield*/, db.query(query)];
+                        return [4 /*yield*/, db.query("select e.*,d.d_name from employee e,department d WHERE e.dept=d.d_id ORDER BY " + req.params.key)];
                     case 1:
                         result = _a.sent();
                         res.status(200).json(result.rows);
@@ -126,14 +123,13 @@ var Employee = /** @class */ (function () {
             });
         }); });
         this.router.get("/searchby/:key", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var key, query, result, data, final, _i, data_1, d, err_4;
+            var key, result, data, final, _i, data_1, d, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         key = req.params.key;
-                        query = "select e.*,d.* from employee e,department d WHERE e.dept=d.d_id";
-                        return [4 /*yield*/, db.query(query)];
+                        return [4 /*yield*/, db.query("select e.*,d.* from employee e,department d WHERE e.dept=d.d_id")];
                     case 1:
                         result = _a.sent();
                         data = result.rows;
@@ -161,7 +157,7 @@ var Employee = /** @class */ (function () {
             });
         }); });
         this.router.post("/", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var data, result1, query, result, err_5;
+            var data, result1, result, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -175,8 +171,7 @@ var Employee = /** @class */ (function () {
                                     .status(422)
                                     .json({ success: false, message: "Invalid department" })];
                         }
-                        query = "INSERT INTO employee(e_name,dept,age) VALUES($1,$2,$3)";
-                        return [4 /*yield*/, db.query(query, [data.e_name, data.dept, data.age])];
+                        return [4 /*yield*/, db.query("INSERT INTO employee(e_name,dept,age) VALUES($1,$2,$3)", [data.e_name, data.dept, data.age])];
                     case 2:
                         result = _a.sent();
                         res.status(201).json({ success: true });
@@ -193,14 +188,13 @@ var Employee = /** @class */ (function () {
             });
         }); });
         this.router.put("/:id", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var data, query, result, err_6;
+            var data, result, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         data = req.body;
-                        query = "UPDATE employee SET e_name=$1,dept=$2,age=$3 WHERE e_id=$4";
-                        return [4 /*yield*/, db.query(query, [
+                        return [4 /*yield*/, db.query("UPDATE employee SET e_name=$1,dept=$2,age=$3 WHERE e_id=$4", [
                                 data.e_name,
                                 data.dept,
                                 data.age,
@@ -225,13 +219,12 @@ var Employee = /** @class */ (function () {
             });
         }); });
         this.router.delete("/:id", function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var query, result, err_7;
+            var result, err_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        query = "UPDATE employee SET active=$1 WHERE e_id=$2";
-                        return [4 /*yield*/, db.query(query, [false, req.params.id])];
+                        return [4 /*yield*/, db.query("UPDATE employee SET active=$1 WHERE e_id=$2", [false, req.params.id])];
                     case 1:
                         result = _a.sent();
                         if (result.rowCount == 1)

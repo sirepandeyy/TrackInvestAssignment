@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from "body-parser";
+import body from 'body-parser'
 import { Database } from "./database/db";
 import { Department } from "./routes/department";
 import { Employee } from "./routes/employee";
@@ -28,8 +28,6 @@ class Server {
     },
     apis:["./routes/*.js"]
   } 
-
-
 
   constructor(port = 3000) {
     this.db.connect();
@@ -65,7 +63,7 @@ class Server {
     next();
   }
   handleRoutes() {
-    this.app.use(bodyParser())
+    this.app.use(body.urlencoded({extended:true}));
     var employeeRoute = new Employee(this.db);
     var departmentRoute = new Department(this.db);
     this.app.use(this.createLog)
